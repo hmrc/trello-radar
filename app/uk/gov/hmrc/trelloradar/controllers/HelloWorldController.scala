@@ -54,26 +54,27 @@ class HelloWorldController @Inject()(
     } yield {
       val cards: List[TrelloCard] = Json.parse(cardsString.get).as[List[TrelloCard]]
       Ok(radarPage(
-        buildQuadrant(name = "1: The right tools", cards),
-        buildQuadrant(name = "2: Effective and secure", cards),
-        buildQuadrant(name = "3: Learning", cards),
-        buildQuadrant(name = "4: Great place", cards)
+        buildQuadrant(0, name = "1: The right tools", cards),
+        buildQuadrant(1, name = "2: Effective and secure", cards),
+        buildQuadrant(2, name = "3: Learning", cards),
+        buildQuadrant(3, name = "4: Great place", cards)
       )())
     }
   }
 
 
-  def buildQuadrant(name: String, cards: List[TrelloCard]) = {
-    Quadrant(name,
-      filterCards(quadrant = name, timeframe = "now", cards),
-      filterCards(quadrant = name, timeframe = "soon", cards),
-      filterCards(quadrant = name, timeframe = "later", cards),
-      filterCards(quadrant = name, timeframe = "someday", cards))
+  def buildQuadrant(id: Int, name: String, cards: List[TrelloCard]) = {
+    Quadrant(id, name,
+      filterCards(ringId = 0, quadrant = name, timeframe = "now", cards),
+      filterCards(ringId = 1, quadrant = name, timeframe = "soon", cards),
+      filterCards(ringId = 2, quadrant = name, timeframe = "later", cards),
+      filterCards(ringId = 3, quadrant = name, timeframe = "someday", cards))
   }
 
 
-  def filterCards(quadrant: String, timeframe: String, cards: List[TrelloCard]): List[TrelloCard] = {
-    cards.filter{ c => c.labels.exists(_.name == quadrant) && c.labels.exists(_.name == timeframe) }
+  def filterCards(ringId: Int, quadrant: String, timeframe: String, cards: List[TrelloCard]): Ring = {
+    val ringCards = cards.filter{ c => c.labels.exists(_.name == quadrant) && c.labels.exists(_.name == timeframe) }
+    Ring(ringId, quadrant, ringCards)
   }
 
 }
@@ -85,6 +86,18 @@ case class TrelloCard(id: String,
                 name: String,
                 closed: Boolean,
                 labels: List[TrelloLabel] = List.empty
-               )
+               ) {
+  val shortname = {
+    val lenghtOfShortname = 50
 
-case class Quadrant(name: String, now: List[TrelloCard], soon: List[TrelloCard], later: List[TrelloCard], someday: List[TrelloCard])
+    if (name.length > lenghtOfShortname) {
+      name.substring(0, lenghtOfShortname) + "..."
+    } else name
+
+  }
+}
+
+
+case class Ring(id: Int, name: String, cards: List[TrelloCard])
+
+case class Quadrant(id: Int, name: String, now: Ring, soon: Ring, later: Ring, someday: Ring)

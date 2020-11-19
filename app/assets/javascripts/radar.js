@@ -255,13 +255,15 @@ function radar_visualization(config) {
   }
 
   function legend_transform(quadrant, ring, index=null) {
-    var dx = ring < 2 ? 0 : 120;
     var dy = (index == null ? -16 : index * 12);
-    if (ring % 2 === 1) {
-      dy = dy + 36 + segmented[quadrant][ring-1].length * 12;
+
+    for(i = 0; i < ring; i++) {
+      dy = dy + 36 // for a ring
+      dy = dy + segmented[quadrant][i].length * 12 //for each card in a ring
     }
+
     return translate(
-      legend_offset[quadrant].x + dx,
+      legend_offset[quadrant].x,
       legend_offset[quadrant].y + dy
     );
   }
