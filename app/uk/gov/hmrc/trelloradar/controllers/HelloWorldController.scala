@@ -35,19 +35,11 @@ import uk.gov.hmrc.trelloradar.model.Readers._
 class HelloWorldController @Inject()(
   appConfig: AppConfig,
   mcc: MessagesControllerComponents,
-  helloWorldPage: HelloWorldPage,
   radarPage: RadarPage,
   tc: TrelloConnector)(implicit ec: ExecutionContext)
     extends FrontendController(mcc) {
 
   implicit val config: AppConfig = appConfig
-
-  val helloWorld: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(helloWorldPage()))
-  }
-
-
-
 
   val radar: Action[AnyContent] = Action.async { implicit request =>
 
