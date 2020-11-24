@@ -14,17 +14,32 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.trelloradar.config
+package uk.gov.hmrc.trelloradar.model
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import play.api.libs.json.Json
 
-@Singleton
-class AppConfig @Inject()(config: Configuration, servicesConfig: ServicesConfig) {
-  val footerLinkItems: Seq[String] = config.getOptional[Seq[String]]("footerLinkItems").getOrElse(Seq())
 
-  val apiToken = config.get[String]("platform-priorites.apiToken")
-  val apiKey = config.get[String]("platform-priorites.apiKey")
-  val boardId = config.get[String]("platform-priorites.boardId")
+case class TrelloCard(id: String,
+                      name: String,
+                      closed: Boolean,
+                      labels: List[TrelloLabel] = List.empty
+                     ) {
+
+
+
+  val shortname = {
+    val lenghtOfShortname = 50
+
+    if (name.length > lenghtOfShortname) {
+      name.substring(0, lenghtOfShortname) + "..."
+    } else name
+
+  }
 }
+
+
+
+
+
+
+

@@ -41,10 +41,10 @@ function radar_visualization(config) {
 
   // radial_min / radial_max are multiples of PI
   const quadrants = [
-    { radial_min: 0, radial_max: 0.5, factor_x: 1, factor_y: 1 },
-    { radial_min: 0.5, radial_max: 1, factor_x: -1, factor_y: 1 },
     { radial_min: -1, radial_max: -0.5, factor_x: -1, factor_y: -1 },
-    { radial_min: -0.5, radial_max: 0, factor_x: 1, factor_y: -1 }
+    { radial_min: 0.5, radial_max: 1, factor_x: -1, factor_y: 1 },
+    { radial_min: -0.5, radial_max: 0, factor_x: 1, factor_y: -1 },
+    { radial_min: 0, radial_max: 0.5, factor_x: 1, factor_y: 1 }
   ];
 
   const rings = [
@@ -55,16 +55,16 @@ function radar_visualization(config) {
   ];
 
   const title_offset =
-    { x: -675, y: -420 };
+    { x: -175, y: -500 };
 
   const footer_offset =
     { x: -675, y: 420 };
 
   const legend_offset = [
-    { x: 450, y: 90 },
-    { x: -675, y: 90 },
     { x: -675, y: -310 },
-    { x: 450, y: -310 }
+    { x: -675, y: 90 },
+    { x: 450, y: -310 },
+    { x: 450, y: 90 }
   ];
 
   function polar(cartesian) {
@@ -168,7 +168,7 @@ function radar_visualization(config) {
 
   // assign unique sequential id to each entry
   var id = 1;
-  for (var quadrant of [2,3,1,0]) {
+  for (var quadrant of [0,1,2,3]) {
     for (var ring = 0; ring < 4; ring++) {
       var entries = segmented[quadrant][ring];
       entries.sort(function(a,b) { return a.label.localeCompare(b.label); })

@@ -19,17 +19,13 @@ package uk.gov.hmrc.trelloradar.connectors
 import com.google.inject.Inject
 import uk.gov.hmrc.http.logging.Authorization
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import uk.gov.hmrc.trelloradar.config.AppConfig
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TrelloConnector @Inject()(http: HttpClient)(implicit ec: ExecutionContext){
+class TrelloConnector @Inject()(appConfig: AppConfig, http: HttpClient)(implicit ec: ExecutionContext){
 
-
-  val apiToken = "d6879ac4676eab445ceffc2434efd55dc00db902d650117828f7445bab7cfc6f"
-  val apiKey = "08ff6a872da775510499e53b65c28e72"
-  val boardId = "5fb2a4ebabe51e0a03d10116"
-
-  val cardsEndpoint = s"https://api.trello.com/1/boards/$boardId/cards?key=$apiKey&token=$apiToken"
+  val cardsEndpoint = s"https://api.trello.com/1/boards/${appConfig.boardId}/cards?key=${appConfig.apiKey}&token=${appConfig.apiToken}"
 
     def getCardsForBoard(): Future[Option[String]] = {
 

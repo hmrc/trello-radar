@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.trelloradar.config
+package uk.gov.hmrc.trelloradar.model
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+case class Quadrant(  id: Int,
+                      name: String,
+                      displayName: String = "",
+                      now: Ring,
+                      soon: Ring,
+                      later: Ring,
+                      someday: Ring) {
 
-@Singleton
-class AppConfig @Inject()(config: Configuration, servicesConfig: ServicesConfig) {
-  val footerLinkItems: Seq[String] = config.getOptional[Seq[String]]("footerLinkItems").getOrElse(Seq())
-
-  val apiToken = config.get[String]("platform-priorites.apiToken")
-  val apiKey = config.get[String]("platform-priorites.apiKey")
-  val boardId = config.get[String]("platform-priorites.boardId")
+  def getDisplayName() = {
+    if(displayName.isEmpty) name else displayName
+  }
 }

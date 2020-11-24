@@ -15,11 +15,11 @@
  *@
 
 @import uk.gov.hmrc.trelloradar.config.AppConfig
-@import uk.gov.hmrc.trelloradar.controllers.TrelloCard
-@import uk.gov.hmrc.trelloradar.controllers.TrelloLabel
-@import uk.gov.hmrc.trelloradar.controllers.Quadrant
+@import uk.gov.hmrc.trelloradar.model.TrelloCard
+@import uk.gov.hmrc.trelloradar.model.TrelloLabel
+@import uk.gov.hmrc.trelloradar.model.Quadrant
 @import play.api.libs.json.Json
-@import uk.gov.hmrc.trelloradar.controllers.Ring
+@import uk.gov.hmrc.trelloradar.model.Ring
 
 @this()
 
@@ -49,8 +49,8 @@
   <script>
           radar_visualization({
            svg_id: "radar",
-           width: 1450,
-           height: 1000,
+           width: 1500,
+           height: 1100,
            colors: {
             background: "#fff",
             grid: "#bbb",
@@ -122,16 +122,16 @@
           ga('send', 'pageview');
   </script>
 
-<hr/>
 
   <table>
    <tr>
     <td>
 
-     <h3>What is the Tech Radar?</h3>
+     <h3>What is the MDTP Priorities Radar?</h3>
 
      <p>
-      The Platform Priorities Radar is a visual guide to the work underway and planned by the platform teams.
+      The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.
+         The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
      </p>
 
      <ul>
@@ -210,24 +210,11 @@
      ring: @ring.id,
      label: '@card.shortname',
      active: false,
-     link: "../queues/hornetq.html",
+     link: "../dunno.html",
      moved: 0
      },
     }
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  </body>
 </html>
