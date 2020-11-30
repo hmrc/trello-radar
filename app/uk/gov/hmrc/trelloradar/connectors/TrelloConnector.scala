@@ -17,13 +17,15 @@
 package uk.gov.hmrc.trelloradar.connectors
 
 import com.google.inject.Inject
-import uk.gov.hmrc.http.logging.Authorization
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.trelloradar.config.AppConfig
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TrelloConnector @Inject()(appConfig: AppConfig, http: HttpClient)(implicit ec: ExecutionContext){
+
+
+
+class TrelloConnector @Inject()(appConfig: AppConfig, http: ProxyHttpClient)(implicit ec: ExecutionContext){
 
   val cardsEndpoint = s"https://api.trello.com/1/boards/${appConfig.boardId}/cards?key=${appConfig.apiKey}&token=${appConfig.apiToken}"
 
