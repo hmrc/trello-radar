@@ -54,6 +54,15 @@ class HelloWorldControllerSpec extends AnyWordSpec with Matchers with GuiceOneAp
   private val controller = new HelloWorldController(appConfig, stubMessagesControllerComponents(), radarPage, trelloConnector)
 
   when(trelloConnector.getCardsForBoard()).thenReturn(Future(Some("[]")))
+  when(trelloConnector.getBoard()).thenReturn(Future(Some(
+    """
+      |{
+      |    "id": "123456",
+      |    "name": "Some board",
+      |    "desc": "Some description",
+      |    "url": "http://plop.com"
+      |}
+      |    """.stripMargin)))
 
   "GET /" should {
     "return 200" in {
