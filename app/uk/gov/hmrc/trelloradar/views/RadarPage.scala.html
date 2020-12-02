@@ -23,7 +23,7 @@
 
 @this()
 
-@(quadrant1: Quadrant, quadrant2: Quadrant, quadrant3: Quadrant, quadrant4: Quadrant)()
+@(boardUrl: String, quadrant1: Quadrant, quadrant2: Quadrant, quadrant3: Quadrant, quadrant4: Quadrant)()
 
 
 
@@ -128,7 +128,6 @@
     <td>
 
      <h3>What is the MDTP Priorities Radar?</h3>
-
      <p>
       The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.
          The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
@@ -152,17 +151,17 @@
     <h3>How do we maintain it?</h3>
 
     <p>
-     By magic. Abracadabra!
+        We parse the data on <a href="@boardUrl">this trello board</a> and place the items in sectors based on their trello labels.
     </p>
-
    </td></tr>
   </table>
 
 <hr/>
 
 
-  <h3>Cards</h3>
+    <br/>
   <table>
+   <tr><th>Card</th><th>Platform Goal</th><th>Timeframe</th></tr>
    @displayQuadrant(quadrant1)
    @displayQuadrant(quadrant2)
    @displayQuadrant(quadrant3)
@@ -178,7 +177,7 @@
 
   @displayCardList(quadrantName: String, timeframe: String, cards: List[TrelloCard]) = {
   @for(card <- cards) {
-   <tr>
+   <tr class="fullTable">
     <td>@card.name</td>
     <td>@quadrantName</td>
     <td>@timeframe</td>

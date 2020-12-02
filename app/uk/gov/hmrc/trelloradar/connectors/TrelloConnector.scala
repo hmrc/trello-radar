@@ -27,12 +27,17 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class TrelloConnector @Inject()(appConfig: AppConfig, http: ProxyHttpClient)(implicit ec: ExecutionContext){
 
-  val cardsEndpoint = s"https://api.trello.com/1/boards/${appConfig.boardId}/cards?key=${appConfig.apiKey}&token=${appConfig.apiToken}"
+  implicit val hc = HeaderCarrier()
 
-    def getCardsForBoard(): Future[Option[String]] = {
+  val trelloEndpoint = s"https://api.trello.com/1"
+  val trelloKeyAndToken = s"key=${appConfig.apiKey}&token=${appConfig.apiToken}"
 
-      implicit val hc = HeaderCarrier()
-      http.GET[Option[HttpResponse]](url = cardsEndpoint).map(_.map(_.body))
-    }
+  def getCardsForBoard(): Future[Option[String]] = {
+    http.GET[Option[HttpResponse]](url = s"${trelloEndpoint}/boards/${appConfig.boardId}/cards?${trelloKeyAndToken}").map(_.map(_.body))
+  }
+
+  def getBoard(): Future[Option[String]] = {
+    http.GET[Option[HttpResponse]](url = s"${trelloEndpoint}/boards/${appConfig.boardId}?${trelloKeyAndToken}").map(_.map(_.body))
+  }
 
 }

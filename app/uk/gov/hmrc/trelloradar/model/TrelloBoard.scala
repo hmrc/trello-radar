@@ -16,15 +16,18 @@
 
 package uk.gov.hmrc.trelloradar.model
 
-import play.api.libs.json.{Json, Reads}
 
-object Readers {
-
-  implicit val trelloBoardReads: Reads[TrelloBoard] = Json.reads[TrelloBoard]
-  implicit val trelloLabelReads: Reads[TrelloLabel] = Json.reads[TrelloLabel]
-  implicit val cardReads: Reads[TrelloCard] = Json.reads[TrelloCard]
+case class TrelloBoard(id: String,
+                       name: String,
+                       desc: String,
+                       url: String
+                     ) {
 
 }
+
+
+
+
 
 
 

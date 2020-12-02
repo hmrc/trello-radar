@@ -22,9 +22,10 @@ import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.trelloradar.config.AppConfig
 import uk.gov.hmrc.trelloradar.connectors.TrelloConnector
-import uk.gov.hmrc.trelloradar.model.{Quadrant, Ring, TrelloCard, TrelloLabel}
+import uk.gov.hmrc.trelloradar.model.{Quadrant, Ring, TrelloBoard, TrelloCard, TrelloLabel}
 import uk.gov.hmrc.trelloradar.views.html.HelloWorldPage
 import uk.gov.hmrc.trelloradar.views.html.RadarPage
+
 import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.trelloradar.model.Readers._
 
@@ -43,12 +44,16 @@ class HelloWorldController @Inject()(
 
   val radar: Action[AnyContent] = Action.async { implicit request =>
 
+
     for {
+      boardString <- tc.getBoard()
       cardsString <- tc.getCardsForBoard()
     } yield {
+      val board: TrelloBoard = Json.parse(boardString.get).as[TrelloBoard]
       val cards: List[TrelloCard] = Json.parse(cardsString.get).as[List[TrelloCard]]
 
       Ok(radarPage(
+        board.url,
         buildQuadrant(0, name = "1: The right tools", displayName = "1: The right tools at the right times", cards),
         buildQuadrant(1, name = "2: Effective and secure", displayName = "2: Effective and secure", cards),
         buildQuadrant(2, name = "3: Learning", displayName = "3: Propagate learning and experience", cards),
