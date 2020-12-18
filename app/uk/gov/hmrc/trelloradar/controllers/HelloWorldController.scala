@@ -22,11 +22,10 @@ import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.trelloradar.config.AppConfig
 import uk.gov.hmrc.trelloradar.connectors.TrelloConnector
-import uk.gov.hmrc.trelloradar.model.{Quadrant, Ring, TrelloBoard, TrelloCard, TrelloLabel}
-import uk.gov.hmrc.trelloradar.views.html.HelloWorldPage
+import uk.gov.hmrc.trelloradar.model.{Quadrant, Ring, TrelloBoard, TrelloCard}
 import uk.gov.hmrc.trelloradar.views.html.RadarPage
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import uk.gov.hmrc.trelloradar.model.Readers._
 
 
@@ -42,9 +41,8 @@ class HelloWorldController @Inject()(
 
   implicit val config: AppConfig = appConfig
 
-  val radar: Action[AnyContent] = Action.async { implicit request =>
 
-
+  val radar: Action[AnyContent] = Action.async {
     for {
       boardString <- tc.getBoard()
       cardsString <- tc.getCardsForBoard()
@@ -61,9 +59,6 @@ class HelloWorldController @Inject()(
       )())
     }
   }
-
-
-
 
 
   // TODO - make the time periods configurable

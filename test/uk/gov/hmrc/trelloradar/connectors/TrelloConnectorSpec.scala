@@ -26,7 +26,6 @@ import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
 import uk.gov.hmrc.trelloradar.config.AppConfig
-import uk.gov.hmrc.trelloradar.views.html.HelloWorldPage
 
 
 

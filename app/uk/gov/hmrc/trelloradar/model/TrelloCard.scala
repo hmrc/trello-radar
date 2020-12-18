@@ -16,9 +16,6 @@
 
 package uk.gov.hmrc.trelloradar.model
 
-import play.api.libs.json.Json
-
-
 case class TrelloCard(id: String,
                       name: String,
                       closed: Boolean,
