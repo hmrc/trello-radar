@@ -17,13 +17,13 @@
 @import uk.gov.hmrc.trelloradar.config.AppConfig
 @import uk.gov.hmrc.trelloradar.model.TrelloCard
 @import uk.gov.hmrc.trelloradar.model.TrelloLabel
-@import uk.gov.hmrc.trelloradar.model.Quadrant
+@import uk.gov.hmrc.trelloradar.model.FullQuadrant
 @import play.api.libs.json.Json
 @import uk.gov.hmrc.trelloradar.model.Ring
 
 @this()
 
-@(boardUrl: String, quadrant1: Quadrant, quadrant2: Quadrant, quadrant3: Quadrant, quadrant4: Quadrant)()
+@(boardUrl: String, quadrant1: FullQuadrant, quadrant2: FullQuadrant, quadrant3: FullQuadrant, quadrant4: FullQuadrant)()
 
 
 
@@ -136,7 +136,7 @@
    @displayQuadrant(quadrant4)
   </table>
 
-  @displayQuadrant(quadrant: Quadrant) = {
+  @displayQuadrant(quadrant: FullQuadrant) = {
    @displayCardList(quadrant.name, "now", quadrant.now.cards)
    @displayCardList(quadrant.name, "soon", quadrant.soon.cards)
    @displayCardList(quadrant.name, "later", quadrant.later.cards)
@@ -163,7 +163,7 @@
    ]
   }
 
-  @quadrantScript(q: Quadrant) = {
+  @quadrantScript(q: FullQuadrant) = {
    @cardScript(q.id, q.now)
    @cardScript(q.id, q.soon)
    @cardScript(q.id, q.later)

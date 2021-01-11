@@ -16,6 +16,6 @@
 
 package uk.gov.hmrc.trelloradar.model
 
-case class TrelloLabel(id: String = "", name: String) {
+case class TrelloLabel(id: String, name: String) {
 
 }

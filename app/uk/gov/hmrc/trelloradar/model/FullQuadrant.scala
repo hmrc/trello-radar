@@ -16,15 +16,19 @@
 
 package uk.gov.hmrc.trelloradar.model
 
-case class Quadrant(  id: Int,
-                      name: String,
-                      displayName: String = "",
-                      now: Ring,
-                      soon: Ring,
-                      later: Ring,
-                      someday: Ring) {
+case class Quadrant(id: Int, trelloLabelId: String, name: String)
 
-  def getDisplayName() = {
-    if(displayName.isEmpty) name else displayName
+case class FullQuadrant(id: Int,
+                        trelloLabelId: String,
+                        name: String,
+                        now: Ring,
+                        soon: Ring,
+                        later: Ring,
+                        someday: Ring) {
+}
+
+object FullQuadrant {
+  def apply(quadrant: Quadrant, now: Ring, soon: Ring, later: Ring, someday: Ring): FullQuadrant = {
+    FullQuadrant(quadrant.id, quadrant.trelloLabelId, quadrant.name, now, soon, later, someday)
   }
 }

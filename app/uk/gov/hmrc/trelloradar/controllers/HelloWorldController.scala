@@ -22,7 +22,7 @@ import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.trelloradar.config.AppConfig
 import uk.gov.hmrc.trelloradar.connectors.TrelloConnector
-import uk.gov.hmrc.trelloradar.model.{Quadrant, Ring, TrelloBoard, TrelloCard}
+import uk.gov.hmrc.trelloradar.model.{FullQuadrant, Quadrant, Ring, TrelloBoard, TrelloCard}
 import uk.gov.hmrc.trelloradar.views.html.RadarPage
 
 import scala.concurrent.ExecutionContext
@@ -42,6 +42,14 @@ class HelloWorldController @Inject()(
   implicit val config: AppConfig = appConfig
 
 
+  val quadrant0 = Quadrant(id = 0, trelloLabelId = "5fb50136a9836541f1a5e935", name = "1: The right tools at the right times")
+  val quadrant1 = Quadrant(id = 1, trelloLabelId = "5fb5015da5699475b5073869", name = "2: Effective and secure")
+  val quadrant2 = Quadrant(id = 2, trelloLabelId = "5fb50883bb35ce08913902f9", name = "3: Propagate learning and experience")
+  val quadrant3 = Quadrant(id = 3, trelloLabelId = "5fb5089911dc63879d852428", name = "4: Great place to work")
+
+
+
+
   val radar: Action[AnyContent] = Action.async {
     for {
       boardString <- tc.getBoard()
@@ -52,27 +60,27 @@ class HelloWorldController @Inject()(
 
       Ok(radarPage(
         board.url,
-        buildQuadrant(0, name = "1: The right tools", displayName = "1: The right tools at the right times", cards),
-        buildQuadrant(1, name = "2: Effective and secure", displayName = "2: Effective and secure", cards),
-        buildQuadrant(2, name = "3: Learning", displayName = "3: Propagate learning and experience", cards),
-        buildQuadrant(3, name = "4: Great place", displayName = "4: Great place to work", cards)
+        buildQuadrant(quadrant0, cards),
+        buildQuadrant(quadrant1, cards),
+        buildQuadrant(quadrant2, cards),
+        buildQuadrant(quadrant3, cards)
       )())
     }
   }
 
 
   // TODO - make the time periods configurable
-  def buildQuadrant(id: Int, name: String, displayName: String, cards: List[TrelloCard]) = {
-    Quadrant(id, name, displayName,
-      filterCards(ringId = 0, quadrant = name, timeframe = "now", cards),
-      filterCards(ringId = 1, quadrant = name, timeframe = "soon", cards),
-      filterCards(ringId = 2, quadrant = name, timeframe = "later", cards),
-      filterCards(ringId = 3, quadrant = name, timeframe = "someday", cards))
+  def buildQuadrant(quadrant: Quadrant, cards: List[TrelloCard]) = {
+    FullQuadrant.apply(quadrant,
+      filterCards(ringId = 0, quadrant = quadrant.trelloLabelId, timeframe = "now", cards),
+      filterCards(ringId = 1, quadrant = quadrant.trelloLabelId, timeframe = "soon", cards),
+      filterCards(ringId = 2, quadrant = quadrant.trelloLabelId, timeframe = "later", cards),
+      filterCards(ringId = 3, quadrant = quadrant.trelloLabelId, timeframe = "someday", cards))
   }
 
 
   def filterCards(ringId: Int, quadrant: String, timeframe: String, cards: List[TrelloCard]): Ring = {
-    val ringCards = cards.filter{ c => c.labels.exists(_.name == quadrant) && c.labels.exists(_.name == timeframe) }
+    val ringCards = cards.filter{ c => c.labels.exists(_.id == quadrant) && c.labels.exists(_.name == timeframe) }
     Ring(ringId, quadrant, ringCards)
   }
 
