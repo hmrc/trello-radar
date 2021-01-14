@@ -21,14 +21,14 @@ case class Quadrant(id: Int, trelloLabelId: String, name: String)
 case class FullQuadrant(id: Int,
                         trelloLabelId: String,
                         name: String,
-                        now: Ring,
-                        soon: Ring,
-                        later: Ring,
-                        someday: Ring) {
+                        ring0: FullRing,
+                        ring1: FullRing,
+                        ring2: FullRing,
+                        ring3: FullRing) {
 }
 
 object FullQuadrant {
-  def apply(quadrant: Quadrant, now: Ring, soon: Ring, later: Ring, someday: Ring): FullQuadrant = {
-    FullQuadrant(quadrant.id, quadrant.trelloLabelId, quadrant.name, now, soon, later, someday)
+  def apply(quadrant: Quadrant, ring0: FullRing, ring1: FullRing, ring2: FullRing, ring3: FullRing): FullQuadrant = {
+    FullQuadrant(quadrant.id, quadrant.trelloLabelId, quadrant.name, ring0, ring1, ring2, ring3)
   }
 }

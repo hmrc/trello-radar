@@ -16,4 +16,12 @@
 
 package uk.gov.hmrc.trelloradar.model
 
-case class Ring(id: Int, name: String, cards: List[TrelloCard])
+case class Ring(id: Int, trelloLabelId: String, name: String)
+
+case class FullRing(id: Int, trelloLabelId: String, name: String, cards: List[TrelloCard])
+
+object FullRing {
+  def apply(ring: Ring, cards: List[TrelloCard]): FullRing = {
+    FullRing(ring.id, trelloLabelId = ring.trelloLabelId, name = ring.name, cards)
+  }
+}

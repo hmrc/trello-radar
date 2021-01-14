@@ -22,7 +22,7 @@ import play.api.mvc._
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.trelloradar.config.AppConfig
 import uk.gov.hmrc.trelloradar.connectors.TrelloConnector
-import uk.gov.hmrc.trelloradar.model.{FullQuadrant, Quadrant, Ring, TrelloBoard, TrelloCard}
+import uk.gov.hmrc.trelloradar.model.{FullQuadrant, FullRing, Quadrant, Ring, TrelloBoard, TrelloCard}
 import uk.gov.hmrc.trelloradar.views.html.RadarPage
 
 import scala.concurrent.ExecutionContext
@@ -41,12 +41,15 @@ class HelloWorldController @Inject()(
 
   implicit val config: AppConfig = appConfig
 
+  val quadrant0 = Quadrant(id = 0, trelloLabelId = appConfig.quadrant0TrelloLabelId, name = "1: The right tools at the right times")
+  val quadrant1 = Quadrant(id = 1, trelloLabelId = appConfig.quadrant1TrelloLabelId, name = "2: Effective and secure")
+  val quadrant2 = Quadrant(id = 2, trelloLabelId = appConfig.quadrant2TrelloLabelId, name = "3: Propagate learning and experience")
+  val quadrant3 = Quadrant(id = 3, trelloLabelId = appConfig.quadrant3TrelloLabelId, name = "4: Great place to work")
 
-  val quadrant0 = Quadrant(id = 0, trelloLabelId = "5fb50136a9836541f1a5e935", name = "1: The right tools at the right times")
-  val quadrant1 = Quadrant(id = 1, trelloLabelId = "5fb5015da5699475b5073869", name = "2: Effective and secure")
-  val quadrant2 = Quadrant(id = 2, trelloLabelId = "5fb50883bb35ce08913902f9", name = "3: Propagate learning and experience")
-  val quadrant3 = Quadrant(id = 3, trelloLabelId = "5fb5089911dc63879d852428", name = "4: Great place to work")
-
+  val ring0 = Ring(0, appConfig.ring0TrelloLabelId, name = "now")
+  val ring1 = Ring(1, appConfig.ring0TrelloLabelId, name = "soon")
+  val ring2 = Ring(2, appConfig.ring0TrelloLabelId, name = "later")
+  val ring3 = Ring(3, appConfig.ring0TrelloLabelId, name = "someday")
 
 
 
@@ -68,20 +71,17 @@ class HelloWorldController @Inject()(
     }
   }
 
-
-  // TODO - make the time periods configurable
   def buildQuadrant(quadrant: Quadrant, cards: List[TrelloCard]) = {
     FullQuadrant.apply(quadrant,
-      filterCards(ringId = 0, quadrant = quadrant.trelloLabelId, timeframe = "now", cards),
-      filterCards(ringId = 1, quadrant = quadrant.trelloLabelId, timeframe = "soon", cards),
-      filterCards(ringId = 2, quadrant = quadrant.trelloLabelId, timeframe = "later", cards),
-      filterCards(ringId = 3, quadrant = quadrant.trelloLabelId, timeframe = "someday", cards))
+      filterCards(ring0, quadrant, cards),
+      filterCards(ring1, quadrant, cards),
+      filterCards(ring2, quadrant, cards),
+      filterCards(ring3 , quadrant, cards))
   }
 
-
-  def filterCards(ringId: Int, quadrant: String, timeframe: String, cards: List[TrelloCard]): Ring = {
-    val ringCards = cards.filter{ c => c.labels.exists(_.id == quadrant) && c.labels.exists(_.name == timeframe) }
-    Ring(ringId, quadrant, ringCards)
+  def filterCards(ring: Ring, quadrant: Quadrant, cards: List[TrelloCard]): FullRing = {
+    val ringCards = cards.filter{ c => c.labels.exists(_.id == quadrant.trelloLabelId) && c.labels.exists(_.id == ring.trelloLabelId) }
+    FullRing(ring, ringCards)
   }
 
 }

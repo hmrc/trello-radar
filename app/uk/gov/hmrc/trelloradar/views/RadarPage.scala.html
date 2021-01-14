@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.trelloradar.model.FullQuadrant
 @import play.api.libs.json.Json
 @import uk.gov.hmrc.trelloradar.model.Ring
+@import uk.gov.hmrc.trelloradar.model.FullRing
 
 @this()
 
@@ -137,10 +138,10 @@
   </table>
 
   @displayQuadrant(quadrant: FullQuadrant) = {
-   @displayCardList(quadrant.name, "now", quadrant.now.cards)
-   @displayCardList(quadrant.name, "soon", quadrant.soon.cards)
-   @displayCardList(quadrant.name, "later", quadrant.later.cards)
-   @displayCardList(quadrant.name, "someday", quadrant.someday.cards)
+   @displayCardList(quadrant.name, quadrant.ring0.name, quadrant.ring0.cards)
+   @displayCardList(quadrant.name, quadrant.ring1.name, quadrant.ring1.cards)
+   @displayCardList(quadrant.name, quadrant.ring2.name, quadrant.ring2.cards)
+   @displayCardList(quadrant.name, quadrant.ring3.name, quadrant.ring3.cards)
   }
 
   @displayCardList(quadrantName: String, timeframe: String, cards: List[TrelloCard]) = {
@@ -164,13 +165,13 @@
   }
 
   @quadrantScript(q: FullQuadrant) = {
-   @cardScript(q.id, q.now)
-   @cardScript(q.id, q.soon)
-   @cardScript(q.id, q.later)
-   @cardScript(q.id, q.someday)
+   @cardScript(q.id, q.ring0)
+   @cardScript(q.id, q.ring1)
+   @cardScript(q.id, q.ring2)
+   @cardScript(q.id, q.ring3)
   }
 
-  @cardScript(quadrantId: Int, ring: Ring) = {
+  @cardScript(quadrantId: Int, ring: FullRing) = {
    @for(card <- ring.cards) {
      {
      quadrant: @quadrantId,
