@@ -29,10 +29,10 @@ class AppConfig @Inject()(config: Configuration, servicesConfig: ServicesConfig)
   val boardId: String = config.get[String]("platform-priorites.boardId")
 
 
-  val quadrant0TrelloLabelId: String = config.get[String]("platform-priorites.quadrant0TrelloLabelId")
-  val quadrant1TrelloLabelId: String = config.get[String]("platform-priorites.quadrant1TrelloLabelId")
-  val quadrant2TrelloLabelId: String = config.get[String]("platform-priorites.quadrant2TrelloLabelId")
-  val quadrant3TrelloLabelId: String = config.get[String]("platform-priorites.quadrant3TrelloLabelId")
+  val quadrant0TrelloLabelId: String = config.get[String]("platform-priorities.quadrant0TrelloLabelId")
+  val quadrant1TrelloLabelId: String = config.get[String]("platform-priorities.quadrant1TrelloLabelId")
+  val quadrant2TrelloLabelId: String = config.get[String]("platform-priorities.quadrant2TrelloLabelId")
+  val quadrant3TrelloLabelId: String = config.get[String]("platform-priorities.quadrant3TrelloLabelId")
 
   val ring0TrelloLabelId: String = config.get[String]("platform-priorities.ring0TrelloLabelId")
   val ring1TrelloLabelId: String = config.get[String]("platform-priorities.ring1TrelloLabelId")
