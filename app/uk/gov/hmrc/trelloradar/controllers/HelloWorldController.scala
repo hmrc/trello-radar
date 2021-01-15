@@ -47,9 +47,9 @@ class HelloWorldController @Inject()(
   val quadrant3 = Quadrant(id = 3, trelloLabelId = appConfig.quadrant3TrelloLabelId, name = "4: Great place to work")
 
   val ring0 = Ring(0, appConfig.ring0TrelloLabelId, name = "now")
-  val ring1 = Ring(1, appConfig.ring0TrelloLabelId, name = "soon")
-  val ring2 = Ring(2, appConfig.ring0TrelloLabelId, name = "later")
-  val ring3 = Ring(3, appConfig.ring0TrelloLabelId, name = "someday")
+  val ring1 = Ring(1, appConfig.ring1TrelloLabelId, name = "soon")
+  val ring2 = Ring(2, appConfig.ring2TrelloLabelId, name = "later")
+  val ring3 = Ring(3, appConfig.ring3TrelloLabelId, name = "someday")
 
 
 
