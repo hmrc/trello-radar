@@ -25,8 +25,9 @@ case class TrelloCard(id: String,
 
 
   val shortname = {
-    val lenghtOfShortname = 50
+    val lenghtOfShortname = 65
 
+    println("My name is: " + name)
     if (name.length > lenghtOfShortname) {
       name.substring(0, lenghtOfShortname) + "..."
     } else name

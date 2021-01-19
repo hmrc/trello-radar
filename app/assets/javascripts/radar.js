@@ -48,23 +48,23 @@ function radar_visualization(config) {
   ];
 
   const rings = [
-    { radius: 130 },
-    { radius: 220 },
-    { radius: 310 },
-    { radius: 400 }
+    { radius: 200 },
+    { radius: 300 },
+    { radius: 400 },
+    { radius: 500 }
   ];
 
   const title_offset =
-    { x: -175, y: -500 };
+    { x: 600, y: 50 };
 
   const footer_offset =
     { x: -675, y: 420 };
 
   const legend_offset = [
-    { x: -675, y: -310 },
-    { x: -675, y: 90 },
-    { x: 450, y: -310 },
-    { x: 450, y: 90 }
+    { x: 0, y: 0 },
+    { x: 400, y: 0 },
+    { x: 800, y: 0 },
+    { x: 1200, y: 0 }
   ];
 
   function polar(cartesian) {
@@ -182,14 +182,19 @@ function radar_visualization(config) {
     return "translate(" + x + "," + y + ")";
   }
 
-  function viewbox(quadrant) {
-    return [
-      Math.max(0, quadrants[quadrant].factor_x * 400) - 420,
-      Math.max(0, quadrants[quadrant].factor_y * 400) - 420,
-      440,
-      440
-    ].join(" ");
-  }
+  // function viewbox(quadrant) {
+  //   return [
+  //     Math.max(0, quadrants[quadrant].factor_x * 400) - 420,
+  //     Math.max(0, quadrants[quadrant].factor_y * 400) - 420,
+  //     440,
+  //     440
+  //   ].join(" ");
+  // }
+
+
+  var baseX = config.width / 2 - 100
+  var baseY = 550
+
 
   var svg = d3.select("svg#" + config.svg_id)
     .style("background-color", config.colors.background)
@@ -197,23 +202,26 @@ function radar_visualization(config) {
     .attr("height", config.height);
 
   var radar = svg.append("g");
-  if ("zoomed_quadrant" in config) {
-    svg.attr("viewBox", viewbox(config.zoomed_quadrant));
-  } else {
-    radar.attr("transform", translate(config.width / 2, config.height / 2));
+  // if ("zoomed_quadrant" in config) {
+  //   svg.attr("viewBox", viewbox(config.zoomed_quadrant));
+  // } else
+    {
+    // radar.attr("transform", translate(config.width / 2, config.height / 2));
+    radar.attr("transform", translate(0, 0));
   }
 
   var grid = radar.append("g");
 
+  grid.attr("transform", translate(baseX, baseY));
   // draw grid lines
   grid.append("line")
-    .attr("x1", 0).attr("y1", -400)
-    .attr("x2", 0).attr("y2", 400)
+    .attr("x1", 0).attr("y1", -500)
+    .attr("x2", 0).attr("y2", 500)
     .style("stroke", config.colors.grid)
     .style("stroke-width", 1);
   grid.append("line")
-    .attr("x1", -400).attr("y1", 0)
-    .attr("x2", 400).attr("y2", 0)
+    .attr("x1", -500).attr("y1", 0)
+    .attr("x2", 500).attr("y2", 0)
     .style("stroke", config.colors.grid)
     .style("stroke-width", 1);
 
@@ -272,22 +280,23 @@ function radar_visualization(config) {
   if (config.print_layout) {
 
     // title
-    radar.append("text")
-      .attr("transform", translate(title_offset.x, title_offset.y))
-      .text(config.title)
-      .style("font-family", "Arial, Helvetica")
-      .style("font-size", "34");
+    // radar.append("text")
+    //   .attr("transform", translate(title_offset.x, title_offset.y))
+    //   .text(config.title)
+    //   .style("font-family", "Arial, Helvetica")
+    //   .style("font-size", "34");
 
     // footer
-    radar.append("text")
-      .attr("transform", translate(footer_offset.x, footer_offset.y))
-      .text("▲ moved up     ▼ moved down")
-      .attr("xml:space", "preserve")
-      .style("font-family", "Arial, Helvetica")
-      .style("font-size", "10");
+    // radar.append("text")
+    //   .attr("transform", translate(footer_offset.x, footer_offset.y))
+    //   .text("▲ moved up     ▼ moved down")
+    //   .attr("xml:space", "preserve")
+    //   .style("font-family", "Arial, Helvetica")
+    //   .style("font-size", "10");
 
-    // legend
+    legend
     var legend = radar.append("g");
+    legend.attr("transform", translate(0, baseY * 2 + 100))
     for (var quadrant = 0; quadrant < 4; quadrant++) {
       legend.append("text")
         .attr("transform", translate(
@@ -320,12 +329,17 @@ function radar_visualization(config) {
     }
   }
 
+
+
   // layer for entries
   var rink = radar.append("g")
-    .attr("id", "rink");
+    .attr("id", "rink")
+    .attr("transform", translate(baseX, baseY));
+
 
   // rollover bubble (on top of everything else)
   var bubble = radar.append("g")
+    .attr("transform", translate(baseX, baseY))
     .attr("id", "bubble")
     .attr("x", 0)
     .attr("y", 0)
@@ -350,7 +364,7 @@ function radar_visualization(config) {
         .text(d.label);
       var bbox = tooltip.node().getBBox();
       d3.select("#bubble")
-        .attr("transform", translate(d.x - bbox.width / 2, d.y - 16))
+        .attr("transform", translate(baseX + d.x - bbox.width / 2, baseY + d.y - 16))
         .style("opacity", 0.8);
       d3.select("#bubble rect")
         .attr("x", -5)
@@ -358,13 +372,14 @@ function radar_visualization(config) {
         .attr("width", bbox.width + 10)
         .attr("height", bbox.height + 4);
       d3.select("#bubble path")
-        .attr("transform", translate(bbox.width / 2 - 5, 3));
+        .attr("transform", translate(baseX + bbox.width / 2 - 5, baseY + 3));
     }
   }
 
   function hideBubble(d) {
     var bubble = d3.select("#bubble")
-      .attr("transform", translate(0,0))
+      // .attr("transform", translate(0,0))
+      .attr("transform", translate(baseX, baseY))
       .style("opacity", 0);
   }
 

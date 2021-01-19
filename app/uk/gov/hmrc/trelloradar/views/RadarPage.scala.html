@@ -44,20 +44,44 @@
  </head>
 
  <body>
+    <h1>The MDTP Priorities Radar</h1>
+     <p>
+         The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.  The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
+     </p>
+     <p>
+         We parse the data on <a href="@boardUrl">this trello board</a> and place the items in sectors based on their trello labels to give a simple overview of the platform work and how it relates back to the overarching platform vision.
+     </p>
+
+     <table>
+         <tr>
+             <td>
+                 <ul>
+                     <li><strong>NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
+                     <li><strong>SOON</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
+                 </ul>
+            </td>
+             <td>
+                 <ul>
+                     <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
+                     <li><strong>MAYBE</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
+                 </ul>
+             </td>
+         </tr>
+     </table>
+
 
   <svg id="radar"></svg>
 
   <script>
           radar_visualization({
            svg_id: "radar",
-           width: 1500,
-           height: 1100,
+           width: 1600,
+           height: 2000,
            colors: {
             background: "#fff",
             grid: "#bbb",
             inactive: "#ddd"
            },
-           title: "MDTP Priorities Radar",
            quadrants: [
             { name: "1: The right tools at the right times" },
             { name: "2: Effective and secure" },
@@ -81,52 +105,16 @@
 
   </script>
 
+     <hr/>
+     <br/>
 
-
-  <table>
-   <tr>
-    <td>
-
-     <h3>What is the MDTP Priorities Radar?</h3>
-     <p>
-      The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.
-         The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
-     </p>
-
-     <ul>
-      <li><strong>NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
-      <li><strong>SOON</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
-      <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
-      <li><strong>MAYBE</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
-     </ul>
-
-    </td><td>
-
-    <h3>What is the purpose?</h3>
-
-    <p>
-     To give a simple overview of the platform work and how it relates back to the overarching platform vision.
-    </p>
-
-    <h3>How do we maintain it?</h3>
-
-    <p>
-        We parse the data on <a href="@boardUrl">this trello board</a> and place the items in sectors based on their trello labels.
-    </p>
-   </td></tr>
-  </table>
-
-<hr/>
-
-
-    <br/>
-  <table>
-   <tr><th>Card</th><th>Platform Goal</th><th>Timeframe</th></tr>
-   @displayQuadrant(quadrant1)
-   @displayQuadrant(quadrant2)
-   @displayQuadrant(quadrant3)
-   @displayQuadrant(quadrant4)
-  </table>
+@*  <table>*@
+@*   <tr><th>Card</th><th>Platform Goal</th><th>Timeframe</th></tr>*@
+@*   @displayQuadrant(quadrant1)*@
+@*   @displayQuadrant(quadrant2)*@
+@*   @displayQuadrant(quadrant3)*@
+@*   @displayQuadrant(quadrant4)*@
+@*  </table>*@
 
   @displayQuadrant(quadrant: FullQuadrant) = {
    @displayCardList(quadrant.name, quadrant.ring0.name, quadrant.ring0.cards)
