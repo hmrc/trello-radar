@@ -67,6 +67,13 @@ function radar_visualization(config) {
     { x: 1200, y: 0 }
   ];
 
+  const quadrant_label_offset = [
+    { x: 50, y: -1000 },
+    { x: 50, y: -200 },
+    { x: 1050, y: -1000 },
+    { x: 1050, y: -200 }
+  ];
+
   function polar(cartesian) {
     var x = cartesian.x;
     var y = cartesian.y;
@@ -276,6 +283,20 @@ function radar_visualization(config) {
     );
   }
 
+  function legend_transform_2(quadrant, ring, index=null) {
+    var dy = (index == null ? -16 : index * 12);
+
+    for(i = 0; i < ring; i++) {
+      dy = dy + 36 // for a ring
+      dy = dy + segmented[quadrant][i].length * 12 //for each card in a ring
+    }
+
+    return translate(
+      legend_offset[quadrant].x,
+      legend_offset[quadrant].y + dy + 200
+    );
+  }
+
   // draw title and legend (only in print layout)
   if (config.print_layout) {
 
@@ -306,6 +327,18 @@ function radar_visualization(config) {
         .text(config.quadrants[quadrant].name)
         .style("font-family", "Arial, Helvetica")
         .style("font-size", "18");
+
+
+      legend.append("text")
+        .attr("transform", translate(
+          quadrant_label_offset[quadrant].x,
+          quadrant_label_offset[quadrant].y - 45
+        ))
+        .text(config.quadrants[quadrant].name)
+        .style("font-family", "Arial, Helvetica")
+        .style("font-size", "18");
+
+
       for (var ring = 0; ring < 4; ring++) {
         legend.append("text")
           .attr("transform", legend_transform(quadrant, ring))
