@@ -5,6 +5,9 @@ body {
 h1 {
   margin: 25px 50px 0 75px;
 }
+h2 {
+  margin: 25px 50px 0 75px;
+}
 h3 {
   margin-top: 50px;
 }
@@ -15,12 +18,37 @@ li {
   margin: 25px 50px 0 0;
 }
 table {
-  width: 1400px;
+  /*width: 1400px;*/
   margin: 0 50px 0 50px;
+  table-layout: fixed;
 }
 td {
-  width: 50%;
   vertical-align: top;
   padding-right: 60px;
 }
 tr.fullTable:hover {background-color: #f5f5f5;}
+
+.radar {
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0 50px 0 50px;
+}
+table.radar {
+  table-layout: auto;
+}
+tr.radar {
+  border: 1px solid black;
+}
+td.radar {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+th.radar {
+  border: 1px solid black;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  background: lightgray;
+}

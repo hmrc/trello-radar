@@ -31,136 +31,146 @@
 
 <html>
 
- <head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>MDTP Priorities Radar</title>
-  <link rel="shortcut icon" href="">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>MDTP Priorities Radar</title>
+        <link rel="shortcut icon" href="">
 
-  <script src='@controllers.routes.Assets.versioned("javascripts/d3.v4.min.js")'></script>
-  <script src='@controllers.routes.Assets.versioned("javascripts/radar.js")'></script>
+        <script src='@controllers.routes.Assets.versioned("javascripts/d3.v4.min.js")'></script>
+        <script src='@controllers.routes.Assets.versioned("javascripts/radar.js")'></script>
 
-@*  <link rel="stylesheet" href="stylesheets/radar.css">*@
-  <link rel="stylesheet" href='@controllers.routes.Assets.versioned("stylesheets/radar.css")'>
- </head>
+        @* <link rel="stylesheet" href="stylesheets/radar.css">*@
+        <link rel="stylesheet" href='@controllers.routes.Assets.versioned("stylesheets/radar.css")'>
+    </head>
 
- <body>
-    <h1>The MDTP Priorities Radar</h1>
-     <p>
-         The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.  The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
-     </p>
-     <p>
-         We parse the data on <a href="@boardUrl">this trello board</a> and place the items in sectors based on their trello labels to give a simple overview of the platform work and how it relates back to the overarching platform vision.
-     </p>
+    <body>
+        <h1>The MDTP Priorities Radar</h1>
 
-     <table>
-         <tr>
-             <td>
-                 <ul>
-                     <li><strong>NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
-                     <li><strong>NEXT</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
-                 </ul>
-            </td>
-             <td>
-                 <ul>
-                     <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
-                     <li><strong>SOMEDAY</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
-                 </ul>
-             </td>
-         </tr>
-     </table>
+        <p>
+            The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.  The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
+        </p>
+        <p>
+            We parse the data on <a href="@boardUrl">this trello board</a>
+            and place the items in sectors based on their trello labels to give a simple overview of the platform work and how it relates back to the overarching platform vision.
+        </p>
 
+        <table>
+            <tr>
+                <td>
+                    <ul>
+                        <li><strong>
+                            NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
+                        <li><strong>
+                            NEXT</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
+                        <li><strong>
+                            SOMEDAY</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
 
-  <svg id="radar"></svg>
+        <svg id="radar"></svg>
 
-  <script>
-          radar_visualization({
-           svg_id: "radar",
-           width: 1600,
-           height: 2000,
-           colors: {
-            background: "#fff",
-            grid: "#bbb",
-            inactive: "#ddd"
-           },
-           quadrants: [
-            { name: "1: The right tools at the right times" },
-            { name: "2: Effective and secure" },
-            { name: "3: Propagate learning and experience" },
-            { name: "4: Great place to work" }
-           ],
-           rings: [
-            { name: "NOW", color: "#93c47d" },
-            { name: "NEXT", color: "#93d2c2" },
-            { name: "LATER", color: "#fbdb84" },
-            { name: "SOMEDAY", color: "#efafa9" }
-           ],
-           print_layout: true,
-           // zoomed_quadrant: 0,
-           //ENTRIES
-           entries: @entriesScript
-           //ENTRIES
-          }
-          );
+        <table class="radar" id="radar-table">
+            <tr>
+                <th class="radar">#</th>
+                <th class="radar">Platform Goal</th>
+                <th class="radar">Timeframe</th>
+                <th class="radar">Team</th>
+                <th class="radar">Trello Card</th>
+            </tr>
+        </table>
 
 
-  </script>
+
+        <script>
+                radar_visualization({
+                            svg_id: "radar",
+                            width: 1600,
+                            height: 1100,
+                            colors: {
+                                background: "#fff",
+                                grid: "#bbb",
+                                inactive: "#ddd"
+                            },
+                            quadrants: [
+                                {name: "1: The right tools at the right times"},
+                                {name: "2: Effective and secure"},
+                                {name: "3: Propagate learning and experience"},
+                                {name: "4: Great place to work"}
+                            ],
+                            rings: [
+                                {name: "NOW", color: "#93c47d"},
+                                {name: "NEXT", color: "#93d2c2"},
+                                {name: "LATER", color: "#fbdb84"},
+                                {name: "SOMEDAY", color: "#efafa9"}
+                            ],
+                            print_layout: true,
+                            // zoomed_quadrant: 0,
+                            //ENTRIES
+                            entries: @entriesScript
+                            //ENTRIES
+                        }
+                );
 
 
-@*  <table>*@
-@*   <tr><th>Card</th><th>Platform Goal</th><th>Timeframe</th></tr>*@
-@*   @displayQuadrant(quadrant1)*@
-@*   @displayQuadrant(quadrant2)*@
-@*   @displayQuadrant(quadrant3)*@
-@*   @displayQuadrant(quadrant4)*@
-@*  </table>*@
-
-  @displayQuadrant(quadrant: FullQuadrant) = {
-   @displayCardList(quadrant.name, quadrant.ring0.name, quadrant.ring0.cards)
-   @displayCardList(quadrant.name, quadrant.ring1.name, quadrant.ring1.cards)
-   @displayCardList(quadrant.name, quadrant.ring2.name, quadrant.ring2.cards)
-   @displayCardList(quadrant.name, quadrant.ring3.name, quadrant.ring3.cards)
-  }
-
-  @displayCardList(quadrantName: String, timeframe: String, cards: List[TrelloCard]) = {
-  @for(card <- cards) {
-   <tr class="fullTable">
-    <td>@card.name</td>
-    <td>@quadrantName</td>
-    <td>@timeframe</td>
-   </tr>
-  }
-  }
+        </script>
 
 
-  @entriesScript() = {
-   [
-     @quadrantScript(quadrant1)
-     @quadrantScript(quadrant2)
-     @quadrantScript(quadrant3)
-     @quadrantScript(quadrant4)
-   ]
-  }
+        @displayQuadrant(quadrant: FullQuadrant) = {
+        @displayCardList(quadrant.name, quadrant.ring0.name, quadrant.ring0.cards)
+        @displayCardList(quadrant.name, quadrant.ring1.name, quadrant.ring1.cards)
+        @displayCardList(quadrant.name, quadrant.ring2.name, quadrant.ring2.cards)
+        @displayCardList(quadrant.name, quadrant.ring3.name, quadrant.ring3.cards)
+        }
 
-  @quadrantScript(q: FullQuadrant) = {
-   @cardScript(q.id, q.ring0)
-   @cardScript(q.id, q.ring1)
-   @cardScript(q.id, q.ring2)
-   @cardScript(q.id, q.ring3)
-  }
+        @displayCardList(quadrantName: String, timeframe: String, cards: List[TrelloCard]) = {
+        @for(card <- cards) {
+            <tr class="fullTable">
+                <td>TBD</td>
+                <td>@quadrantName</td>
+                <td>@timeframe</td>
+                <td>TBD</td>
+                <td>@card.name</td>
+            </tr>
+        }
+        }
 
-  @cardScript(quadrantId: Int, ring: FullRing) = {
-   @for(card <- ring.cards) {
-     {
-     quadrant: @quadrantId,
-     ring: @ring.id,
-     label: '@card.shortname',
-     active: false,
-     link: "../dunno.html",
-     moved: 0
-     },
-    }
-   }
 
- </body>
+        @entriesScript() = {
+            [
+            @quadrantScript(quadrant1)
+            @quadrantScript(quadrant2)
+            @quadrantScript(quadrant3)
+            @quadrantScript(quadrant4)
+            ]
+        }
+
+        @quadrantScript(q: FullQuadrant) = {
+        @cardScript(q.id, q.ring0)
+        @cardScript(q.id, q.ring1)
+        @cardScript(q.id, q.ring2)
+        @cardScript(q.id, q.ring3)
+        }
+
+        @cardScript(quadrantId: Int, ring: FullRing) = {
+        @for(card <- ring.cards) {
+            {
+            quadrant: @quadrantId,
+            ring: @ring.id,
+            label: '@card.shortname',
+            active: false,
+            link: "../dunno.html",
+            moved: 0
+            },
+        }
+        }
+
+    </body>
 </html>
 
