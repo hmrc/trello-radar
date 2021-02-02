@@ -44,35 +44,50 @@
     </head>
 
     <body>
-        <h1>The MDTP Priorities Radar</h1>
 
-        <p>
-            The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.  The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
-        </p>
-        <p>
-            We parse the data on <a href="@boardUrl">this trello board</a>
-            and place the items in sectors based on their trello labels to give a simple overview of the platform work and how it relates back to the overarching platform vision.
-        </p>
+        <div>
+            <h1>The MDTP Priorities Radar</h1>
+            <div class="candy">
+                <div>
+                    <img src='@controllers.routes.Assets.versioned("hmrc.jpg")'  />
+                </div>
+                <div>
+                    <img src='@controllers.routes.Assets.versioned("mdtp.jpg")'/>
+                </div>
+            </div>
+            <div>
+            </div>
+        </div>
 
-        <table>
-            <tr>
-                <td>
-                    <ul>
-                        <li><strong>
-                            NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
-                        <li><strong>
-                            NEXT</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
-                        <li><strong>
-                            SOMEDAY</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
+        <div>
+            <p>
+                The MDTP Priorities Radar is a visual guide to the work underway and planned by the platform teams.  The work is separated into different timescales (rings) and assigned to the 4 different strategic platform goals (quadrants).
+            </p>
+            <p>
+                We parse the data on <a href="@boardUrl">this trello board</a>
+                and place the items in sectors based on their trello labels to give a simple overview of the platform work and how it relates back to the overarching platform vision.
+            </p>
+
+            <table>
+                <tr>
+                    <td>
+                        <ul>
+                            <li><strong>
+                                NOW</strong> &mdash; Work in progress and likely to be finished in the next 6 weeks</li>
+                            <li><strong>
+                                NEXT</strong> &mdash; Work in progress or about to be started and likely to finished in the next 3 months</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li><strong>LATER</strong> &mdash; Work unlikely to be finished for 6 months or more.</li>
+                            <li><strong>
+                                SOMEDAY</strong> &mdash; Longer term strategic goals or possible solutions that may or may not pan out.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
         <svg id="radar"></svg>
 
