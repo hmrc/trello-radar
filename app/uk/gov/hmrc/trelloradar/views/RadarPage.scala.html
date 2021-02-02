@@ -96,7 +96,7 @@
                 <th class="radar">#</th>
                 <th class="radar">Platform Goal</th>
                 <th class="radar">Timeframe</th>
-                <th class="radar">Team</th>
+                <th class="radar">Team(s)</th>
                 <th class="radar">Trello Card</th>
             </tr>
         </table>
@@ -181,10 +181,13 @@
             label: '@card.shortname',
             active: false,
             link: "../dunno.html",
-            moved: 0
+            moved: 0,
+            teams: '@{"<ul class=\"superslim\">" + card.teams.foldLeft("")((a, b) => a + "<li class=\"superslim\">" + b.name + "</li>") + "</ul>"}'
             },
         }
         }
+
+
 
     </body>
 </html>

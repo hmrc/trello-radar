@@ -376,6 +376,11 @@ function radar_visualization(config) {
     c.forEach(c => c.style.backgroundColor = "");
   }
 
+  var stringToHTML = function (str) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body;
+  };
 
 
   var issues = rink.selectAll(".blip")
@@ -385,6 +390,7 @@ function radar_visualization(config) {
   issues.each(function(d) {
     var radarTable = document.getElementById("radar-table");
     var row = radarTable.insertRow();
+    row.setAttribute("class", "legendRow")
     row.id = "legendItem" + d.id
     var cell0 = row.insertCell(0);
     cell0.setAttribute("class", "radar")
@@ -400,10 +406,11 @@ function radar_visualization(config) {
     var quadrant = config.quadrants[d.quadrant]
     var ring = config.rings[d.ring]
 
+
     cell0.innerHTML = d.id
     cell1.innerHTML = quadrant.name
     cell2.innerHTML = ring.name
-    cell3.innerHTML = "tbd"
+    cell3.innerHTML = stringToHTML(d.teams).innerText
     cell4.innerHTML = d.label
 
     row.onmouseover = function() { showBubble(d); highlightLegendItem(d); };

@@ -22,6 +22,13 @@ case class TrelloCard(id: String,
                       labels: List[TrelloLabel] = List.empty
                      ) {
 
+  // TODO - move this list out to config and use ids
+  val teamsLabelList = List[String]("Cross-team", "Infrastructure", "PlatOps", "Build & Deploy", "Platform Security", "CIP", "Platform UI", "Telemetry", "DDC Ops", "Tiger", "Test Leads", "Architecture", "API Platform", "Platform Operations")
+
+  val teams = labels.filter(l => teamsLabelList.contains(l.name))
+
+  val teamsString = teams.toString()
+
 
   val shortname = name
 

@@ -34,7 +34,8 @@ td {
   vertical-align: top;
   padding-right: 60px;
 }
-tr.fullTable:hover {background-color: #f5f5f5;}
+
+tr.legendRow:nth-child(even){background-color: #f2f2f2;}
 
 .radar {
   text-align: left;
@@ -46,12 +47,14 @@ table.radar {
 }
 tr.radar {
   border: 1px solid black;
+
 }
 td.radar {
   padding-top: 2px;
   padding-bottom: 2px;
   padding-left: 8px;
   padding-right: 8px;
+  border: 1px solid #ddd;
 }
 th.radar {
   border: 1px solid black;
@@ -59,4 +62,11 @@ th.radar {
   padding-bottom: 6px;
   padding-left: 6px;
   background: lightgray;
+}
+ul.superslim {
+  margin: 2px 2px 2px 10px;
+  padding: unset;
+}
+li.superslim {
+  margin: 2px 2px 2px 2px;
 }
